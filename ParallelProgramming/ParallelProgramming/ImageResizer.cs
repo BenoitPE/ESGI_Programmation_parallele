@@ -2,9 +2,9 @@
 {
     public class ImageResizer
     {
-        private List<string> imageFiles = new List<string>();
+        private readonly List<string> imageFiles = new List<string>();
         private string inputDirectory = string.Empty;
-        private string outputDirectory = string.Empty;
+        private readonly string outputDirectory = string.Empty;
         private const string ExtensionType = "jpg";
 
         public ImageResizer()
