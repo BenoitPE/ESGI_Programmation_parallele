@@ -5,6 +5,7 @@
         private List<string> imageFiles = new List<string>();
         private string inputDirectory = string.Empty;
         private string outputDirectory = string.Empty;
+        private const string ExtensionType = "jpg";
 
         public ImageResizer()
         {
@@ -12,7 +13,7 @@
             outputDirectory = Path.GetFullPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\Outputs\"));
 
             // Charger les fichiers d'images .jpg présents dans le dossier Inputs/
-            imageFiles = new List<string>(Directory.GetFiles(inputDirectory, "*.jpg", SearchOption.TopDirectoryOnly));
+            imageFiles = new List<string>(Directory.GetFiles(inputDirectory, $"*.{ExtensionType}", SearchOption.TopDirectoryOnly));
         }
 
         /// <summary>
@@ -22,7 +23,7 @@
         {
             foreach (var file in imageFiles)
             {
-                string outputFilePath = outputDirectory + Path.GetFileNameWithoutExtension(file) + "_compressed.jpg";
+                string outputFilePath = outputDirectory + Path.GetFileNameWithoutExtension(file) + $"_compressed.{ExtensionType}";
 
                 Resize(file, outputFilePath);
             }
@@ -35,7 +36,7 @@
         {
             Parallel.ForEach(imageFiles, new ParallelOptions { MaxDegreeOfParallelism = 30 }, (file) =>
             {
-                string outputFilePath = outputDirectory + Path.GetFileNameWithoutExtension(file) + "_compressed.jpg";
+                string outputFilePath = outputDirectory + Path.GetFileNameWithoutExtension(file) + $"_compressed.{ExtensionType}";
 
                 Resize(file, outputFilePath);
             });
@@ -54,6 +55,22 @@
                     Mode = ResizeMode.Max
                 }));
                 image.Save(outputFilePath);
+            }
+        }
+
+        public int CountFilesInInputFolder()
+        {
+            return Directory.GetFiles(inputDirectory, "*", SearchOption.AllDirectories).Length;
+        }
+
+        public void InitFilesInInputFolder(int nbCopy)
+        {
+            var file = imageFiles.First();
+            string filePath = inputDirectory + Path.GetFileNameWithoutExtension(file) + $".{ExtensionType}";
+            for (int i = 0; i < nbCopy; i++)
+            {
+                string fileCopiedPath = inputDirectory + Path.GetFileNameWithoutExtension(file) + $"_{i}.{ExtensionType}";
+                File.Copy(filePath, fileCopiedPath, true);
             }
         }
     }
