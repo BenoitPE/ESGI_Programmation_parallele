@@ -14,3 +14,5 @@ Nous avons plusieurs threads qui souhaitent écrire dans un fichier. Nous créon
 ![](Readme/accueil.png)
 Saisissez `1` ou `2` et validez avec la touche `Entrer`.
 4. L'affiche se met à jour. Pour revenir au menu principal, appuyez sur `Entrer`
+![](Readme/semaphore.png)
+![](Readme/comparaison.png)
