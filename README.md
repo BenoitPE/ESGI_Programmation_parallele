@@ -1,4 +1,4 @@
-# ESGI - Design Pattern en C#
+# ESGI - Programmation parallèle en C#
 
 Développé en `.NET 7.0`
 La solution contient l'implémentation de:
